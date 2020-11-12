@@ -1,9 +1,0 @@
-/home/benitodarder/Development/java/maven/rabbitMQPlayground/simple-producer-consumer/rabbitmq-base/src/main/java/local/tin/tests/rabbitmq/base/model/RabbitMQConfigMessage.java
-/home/benitodarder/Development/java/maven/rabbitMQPlayground/simple-producer-consumer/rabbitmq-base/src/main/java/local/tin/tests/rabbitmq/base/model/RabbitMQException.java
-/home/benitodarder/Development/java/maven/rabbitMQPlayground/simple-producer-consumer/rabbitmq-base/src/main/java/local/tin/tests/rabbitmq/base/exchanges/Producer.java
-/home/benitodarder/Development/java/maven/rabbitMQPlayground/simple-producer-consumer/rabbitmq-base/src/main/java/local/tin/tests/rabbitmq/base/model/RabbitMQConfigConnectionFactory.java
-/home/benitodarder/Development/java/maven/rabbitMQPlayground/simple-producer-consumer/rabbitmq-base/src/main/java/local/tin/tests/rabbitmq/base/factories/ChannelFactory.java
-/home/benitodarder/Development/java/maven/rabbitMQPlayground/simple-producer-consumer/rabbitmq-base/src/main/java/local/tin/tests/rabbitmq/base/model/RabbitMQConfigReceiver.java
-/home/benitodarder/Development/java/maven/rabbitMQPlayground/simple-producer-consumer/rabbitmq-base/src/main/java/local/tin/tests/rabbitmq/base/factories/ConnectionsFactory.java
-/home/benitodarder/Development/java/maven/rabbitMQPlayground/simple-producer-consumer/rabbitmq-base/src/main/java/local/tin/tests/rabbitmq/base/model/RabbitMQMessage.java
-/home/benitodarder/Development/java/maven/rabbitMQPlayground/simple-producer-consumer/rabbitmq-base/src/main/java/local/tin/tests/rabbitmq/base/model/RabbitMQConfigSender.java
