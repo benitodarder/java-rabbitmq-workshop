@@ -11,5 +11,6 @@
     <modules>
         <module>rabbitmq-base</module>
         <module>simple-producer</module>
+        <module>simple-consumer</module>
     </modules>
 </project>

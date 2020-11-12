@@ -1,10 +1,7 @@
 package local.tin.tests.rabbitmq.base.model;
 
 
-import com.rabbitmq.client.AMQP.BasicProperties;
 import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.MessageProperties;
-import java.nio.charset.StandardCharsets;
 
 /**
  *
@@ -14,7 +11,6 @@ public class RabbitMQMessage {
     
     private RabbitMQConfigMessage rabbitMQConfigMessage;
     private Channel channel;
-    private BasicProperties messageProperties;
     private String payload;
     private String charset;
     
@@ -24,14 +20,6 @@ public class RabbitMQMessage {
 
     public void setChannel(Channel channel) {
         this.channel = channel;
-    }
-
-    public BasicProperties getMessageProperties() {
-        return messageProperties;
-    }
-
-    public void setMessageProperties(BasicProperties messageProperties) {
-        this.messageProperties = messageProperties;
     }
 
     public String getPayload() {
@@ -57,4 +45,5 @@ public class RabbitMQMessage {
     public void setCharset(String charset) {
         this.charset = charset;
     }
+
 }

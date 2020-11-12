@@ -31,21 +31,21 @@ public class ChannelFactory {
 
     /**
      * Returns the channel corresponding to the configuration.
-     * 
-     * If configuration is null a new connection is created. Requires host name.
-     * 
+     *
+     * If configuration is null a new connection is created and added to the 
+     * configuration message. Requires host name.
+     *
      * @param rabbitMQConfig extends RabbitMQConfigMessage
-     * @return Channel 
-     * @throws RabbitMQException 
+     * @return Channel
+     * @throws RabbitMQException
      */
     public Channel getChannel(RabbitMQConfigMessage rabbitMQConfig) throws RabbitMQException {
         Channel channel = null;
         try {
-            if (rabbitMQConfig.getConnection() != null) {
-            channel = rabbitMQConfig.getConnection().createChannel();
-            } else {
-                channel = ConnectionsFactory.getInstance().getConnection(rabbitMQConfig).createChannel();
+            if (rabbitMQConfig.getConnection() == null) {
+                rabbitMQConfig.setConnection(ConnectionsFactory.getInstance().getConnection(rabbitMQConfig));
             }
+            channel = rabbitMQConfig.getConnection().createChannel();
             if (rabbitMQConfig instanceof RabbitMQConfigSender) {
                 RabbitMQConfigSender rabbitMQConfigSender = (RabbitMQConfigSender) rabbitMQConfig;
                 if (rabbitMQConfig instanceof RabbitMQConfigReceiver) {

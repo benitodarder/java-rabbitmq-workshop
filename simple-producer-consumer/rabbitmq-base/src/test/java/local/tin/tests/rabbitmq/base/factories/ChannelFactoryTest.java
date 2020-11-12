@@ -114,4 +114,14 @@ public class ChannelFactoryTest {
         
         verify(mockedConnectionsFactory).getConnection(rabbitMQConfigMessage);
     }
+    
+    @Test
+    public void getChannel_assigns_the_connection_to_the_config_message_when_a_new_connection_is_created() throws RabbitMQException {
+        RabbitMQConfigSender rabbitMQConfigMessage = new RabbitMQConfigSender();
+        rabbitMQConfigMessage.setHost("hoooost");
+        
+        ChannelFactory.getInstance().getChannel(rabbitMQConfigMessage);
+        
+        assertThat(rabbitMQConfigMessage.getConnection(), equalTo(mockedConnection));
+    }    
 }
