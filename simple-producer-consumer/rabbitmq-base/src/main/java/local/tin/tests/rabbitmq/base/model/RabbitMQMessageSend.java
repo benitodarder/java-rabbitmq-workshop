@@ -11,7 +11,7 @@ public class RabbitMQMessageSend extends RabbitMQMessage {
     
     private BasicProperties messageProperties;    
     private boolean closeConnection;
-    
+    private boolean closeChannel;
 
     public boolean isCloseConnection() {
         return closeConnection;
@@ -28,4 +28,13 @@ public class RabbitMQMessageSend extends RabbitMQMessage {
     public void setMessageProperties(BasicProperties messageProperties) {
         this.messageProperties = messageProperties;
     }    
+
+    public boolean isCloseChannel() {
+        return closeChannel;
+    }
+
+    public void setCloseChannel(boolean closeChannel) {
+        this.closeChannel = closeChannel;
+    }
+    
 }

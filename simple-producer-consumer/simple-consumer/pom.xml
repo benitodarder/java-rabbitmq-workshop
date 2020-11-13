@@ -9,7 +9,7 @@
     <artifactId>simple-consumer</artifactId>
     <packaging>jar</packaging>
     <properties>
-        <jar.main.class>local.tin.tests.rabbitmq.simple.consumer.Consumer</jar.main.class>
+        <jar.main.class>local.tin.tests.rabbitmq.simple.consumer.LoopedConsumer</jar.main.class>
     </properties>    
     <dependencies>
         <dependency>
