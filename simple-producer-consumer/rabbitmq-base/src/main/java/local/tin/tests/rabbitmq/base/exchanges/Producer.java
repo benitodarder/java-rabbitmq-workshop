@@ -3,7 +3,6 @@ package local.tin.tests.rabbitmq.base.exchanges;
 import com.rabbitmq.client.Channel;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
-import java.util.logging.Level;
 import local.tin.tests.rabbitmq.base.factories.ChannelFactory;
 import local.tin.tests.rabbitmq.base.model.RabbitMQException;
 import local.tin.tests.rabbitmq.base.model.RabbitMQMessageSend;

@@ -18,7 +18,7 @@ import static local.tin.tests.rabbitmq.simple.consumer.Consumer.HOST;
 import static local.tin.tests.rabbitmq.simple.consumer.Consumer.QUEUE_NAME;
 import local.tin.tests.rabbitmq.simple.consumer.callbacks.SimpleCancelCallback;
 import local.tin.tests.rabbitmq.simple.consumer.callbacks.SimpleDeliverCallback;
-import local.tin.tests.rabbitmq.simple.consumer.threads.ConsumerThread;
+import local.tin.tests.rabbitmq.base.threads.ConsumerThread;
 import org.apache.log4j.Logger;
 
 /**

@@ -1,4 +1,4 @@
-package local.tin.tests.rabbitmq.simple.consumer.threads;
+package local.tin.tests.rabbitmq.base.threads;
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
@@ -27,7 +27,7 @@ public class ConsumerThread extends Thread {
             
     
     public void restartChannel() {
-        this.run();
+        this.start();
     }
 
     @Override
@@ -35,19 +35,19 @@ public class ConsumerThread extends Thread {
         try {
             consumerTag = Consumer.getInstance().consume(consumer);
         } catch (RabbitMQException ex) {
-            LOGGER.error("Unexpected RabbitMQException runnin... ", ex);
+            LOGGER.error("Unexpected RabbitMQException runninq... ", ex);
         }
     }
     
     public void closeChannel() throws IOException, TimeoutException {
-        LOGGER.info("About to close the channel");
+        LOGGER.debug("About to close the channel");
         consumer.getChannel().close();
-        LOGGER.info("Channel closed");
-        LOGGER.info("About to close the connection");
+        LOGGER.debug("Channel closed");
+        LOGGER.debug("About to close the connection");
         consumer.getRabbitMQConfigMessage().getConnection().close();
-        LOGGER.info("Connection closed");
-        LOGGER.info("About to interrupt the thread");
+        LOGGER.debug("Connection closed");
+        LOGGER.debug("About to interrupt the thread");
         this.interrupt();
-        LOGGER.info("Thread interrupted.");
+        LOGGER.debug("Thread interrupted.");
     }
 }

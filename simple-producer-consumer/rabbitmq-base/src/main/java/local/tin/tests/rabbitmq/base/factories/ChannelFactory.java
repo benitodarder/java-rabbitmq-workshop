@@ -1,10 +1,7 @@
 package local.tin.tests.rabbitmq.base.factories;
 
 import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.Connection;
-import com.rabbitmq.client.ConnectionFactory;
 import java.io.IOException;
-import java.util.concurrent.TimeoutException;
 import local.tin.tests.rabbitmq.base.model.RabbitMQConfigMessage;
 import local.tin.tests.rabbitmq.base.model.RabbitMQConfigReceiver;
 import local.tin.tests.rabbitmq.base.model.RabbitMQConfigSender;
@@ -19,7 +16,7 @@ public class ChannelFactory {
     private ChannelFactory() {
     }
 
-    public synchronized static ChannelFactory getInstance() throws RabbitMQException {
+    public static synchronized ChannelFactory getInstance() {
 
         return ChannelFactoryHolder.INSTANCE;
     }
@@ -32,7 +29,7 @@ public class ChannelFactory {
     /**
      * Returns the channel corresponding to the configuration.
      *
-     * If configuration is null a new connection is created and added to the 
+     * If configuration is null a new connection is created and added to the
      * configuration message. Requires host name.
      *
      * @param rabbitMQConfig extends RabbitMQConfigMessage
