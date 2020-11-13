@@ -29,6 +29,8 @@ public class ConnectionsFactory {
         try {
             ConnectionFactory connectionFactory = new ConnectionFactory();
             connectionFactory.setHost(rabbitMQConfigConnectionFactory.getHost());
+            connectionFactory.setUsername(rabbitMQConfigConnectionFactory.getUserName());
+            connectionFactory.setPassword(rabbitMQConfigConnectionFactory.getPassword());            
             return connectionFactory.newConnection();
         } catch (IOException | TimeoutException ex) {
             throw new RabbitMQException(ex);

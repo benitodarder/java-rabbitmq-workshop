@@ -23,7 +23,9 @@ import org.powermock.modules.junit4.PowerMockRunner;
 @PrepareForTest({ConnectionFactory.class, ConnectionsFactory.class})
 public class ConnectionsFactoryTest {
 
-    private static final String HOST_NAME = "hoooost";    
+    private static final String HOST_NAME = "hoooost";   
+    private static final String PASSWORD = "pass";
+    private static final String USER_NAME = "user";     
     private Connection mockedConnection;        
     private ConnectionFactory mockedConnectionFactory;
 
@@ -53,4 +55,22 @@ public class ConnectionsFactoryTest {
         ConnectionsFactory.getInstance().getConnection(rabbitMQConfigConnectionFactory);
         
     }    
+    
+    
+    @Test
+    public void getConnection_assigns_username_password() throws RabbitMQException, Exception {
+        mockedConnectionFactory = mock(ConnectionFactory.class);
+        PowerMockito.whenNew(ConnectionFactory.class).withNoArguments().thenReturn(mockedConnectionFactory);
+        mockedConnection = mock(Connection.class);         
+        when(mockedConnectionFactory.newConnection()).thenReturn(mockedConnection);           
+        RabbitMQConfigConnectionFactory rabbitMQConfigConnectionFactory = new RabbitMQConfigConnectionFactory();
+        rabbitMQConfigConnectionFactory.setHost(HOST_NAME);
+        rabbitMQConfigConnectionFactory.setUserName(USER_NAME);
+        rabbitMQConfigConnectionFactory.setPassword(PASSWORD);
+        
+        ConnectionsFactory.getInstance().getConnection(rabbitMQConfigConnectionFactory);
+        
+        verify(mockedConnectionFactory).setUsername(USER_NAME);
+        verify(mockedConnectionFactory).setPassword(PASSWORD);
+    }     
 }
