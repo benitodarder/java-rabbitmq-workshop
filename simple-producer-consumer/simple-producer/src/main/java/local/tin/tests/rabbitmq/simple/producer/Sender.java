@@ -30,6 +30,8 @@ public class Sender {
     public static void main(String[] args) throws RabbitMQException, IOException {
         RabbitMQConfigConnectionFactory rabbitMQConfigConnectionFactory = new RabbitMQConfigConnectionFactory();
         rabbitMQConfigConnectionFactory.setHost(HOST);
+        rabbitMQConfigConnectionFactory.setUserName("guest");
+        rabbitMQConfigConnectionFactory.setPassword("guest");        
         Connection connection = ConnectionsFactory.getInstance().getConnection(rabbitMQConfigConnectionFactory);
         RabbitMQConfigSender rabbitMQConfigMessage = new RabbitMQConfigSender();
         rabbitMQConfigMessage.setConnection(connection);

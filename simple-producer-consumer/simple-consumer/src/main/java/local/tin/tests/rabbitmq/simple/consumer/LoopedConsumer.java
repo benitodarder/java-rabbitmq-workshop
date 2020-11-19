@@ -39,6 +39,8 @@ public class LoopedConsumer {
     public static void main(String[] args) throws IOException, RabbitMQException, TimeoutException {
         RabbitMQConfigConnectionFactory rabbitMQConfigConnectionFactory = new RabbitMQConfigConnectionFactory();
         rabbitMQConfigConnectionFactory.setHost(HOST);
+        rabbitMQConfigConnectionFactory.setUserName("guest");
+        rabbitMQConfigConnectionFactory.setPassword("guest");
         Connection connection = ConnectionsFactory.getInstance().getConnection(rabbitMQConfigConnectionFactory);
         RabbitMQConfigSender rabbitMQConfigMessage = new RabbitMQConfigSender();
         rabbitMQConfigMessage.setConnection(connection);
@@ -48,7 +50,7 @@ public class LoopedConsumer {
         rabbitMQMessage.setRabbitMQConfigMessage(rabbitMQConfigMessage);
         rabbitMQMessage.setChannel(channel);
         rabbitMQMessage.setCharset(CHARSET);
-        SimpleDeliverCallback simpleDeliverCallback = new SimpleDeliverCallback(CHARSET);
+        SimpleDeliverCallback simpleDeliverCallback = new SimpleDeliverCallback(CHARSET, channel);
         rabbitMQMessage.setDeliveryCallback(simpleDeliverCallback);
         SimpleCancelCallback emptyCancelCallback = new SimpleCancelCallback();
         rabbitMQMessage.setCancelCallback(emptyCancelCallback);

@@ -27,11 +27,15 @@ public class ConsumerThread extends Thread {
             
     
     public void restartChannel() {
-        this.start();
+        startChannel();
     }
 
     @Override
     public void run() {
+        startChannel();
+    }
+
+    private void startChannel() {
         try {
             consumerTag = Consumer.getInstance().consume(consumer);
         } catch (RabbitMQException ex) {
