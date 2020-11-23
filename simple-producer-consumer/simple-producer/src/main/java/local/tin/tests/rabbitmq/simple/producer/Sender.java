@@ -2,6 +2,7 @@ package local.tin.tests.rabbitmq.simple.producer;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.MessageProperties;
 import java.io.IOException;
 import local.tin.tests.rabbitmq.base.exchanges.Producer;
 import local.tin.tests.rabbitmq.base.factories.ChannelFactory;
@@ -20,7 +21,7 @@ import local.tin.tests.rabbitmq.base.model.RabbitMQMessageSend;
 public class Sender {
 
     public static final String HOST = "192.168.56.19";
-    public static final String QUEUE_NAME = "hello";
+    public static final String QUEUE_NAME = "sample_persistent_queue";
     public static final String CHARSET = "UTF-8";
     
     /**
@@ -36,11 +37,15 @@ public class Sender {
         RabbitMQConfigSender rabbitMQConfigMessage = new RabbitMQConfigSender();
         rabbitMQConfigMessage.setConnection(connection);
         rabbitMQConfigMessage.setQueueName(QUEUE_NAME);
+        rabbitMQConfigMessage.setDurable(true);
+        
         Channel channel = ChannelFactory.getInstance().getChannel(rabbitMQConfigMessage);
         RabbitMQMessageSend rabbitMQMessage = new RabbitMQMessageSend();
         rabbitMQMessage.setRabbitMQConfigMessage(rabbitMQConfigMessage);
+
         rabbitMQMessage.setChannel(channel);
         rabbitMQMessage.setCharset(CHARSET);
+        rabbitMQMessage.setMessageProperties(MessageProperties.PERSISTENT_TEXT_PLAIN);
         if (args.length == 0) {
             rabbitMQMessage.setPayload("Hello world!!");
         } else {

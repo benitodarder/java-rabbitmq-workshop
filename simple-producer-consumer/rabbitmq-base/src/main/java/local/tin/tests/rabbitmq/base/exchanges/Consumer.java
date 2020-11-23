@@ -1,5 +1,6 @@
 package local.tin.tests.rabbitmq.base.exchanges;
 
+import com.rabbitmq.client.Channel;
 import java.io.IOException;
 import local.tin.tests.rabbitmq.base.factories.ChannelFactory;
 import local.tin.tests.rabbitmq.base.model.RabbitMQException;
@@ -10,6 +11,8 @@ import local.tin.tests.rabbitmq.base.model.RabbitMQMessageConsume;
  * @author benitodarder
  */
 public class Consumer {
+    
+    private Channel channel;
     
     private Consumer() {
     }
@@ -38,10 +41,25 @@ public class Consumer {
             if (rabbitMQMessageConsume.getChannel() == null) {
                 rabbitMQMessageConsume.setChannel(ChannelFactory.getInstance().getChannel(rabbitMQMessageConsume.getRabbitMQConfigMessage()));
             }
-            consumerTag = rabbitMQMessageConsume.getChannel().basicConsume(rabbitMQMessageConsume.getRabbitMQConfigMessage().getQueueName(), rabbitMQMessageConsume.isAutoAcknowledge(), rabbitMQMessageConsume.getDeliveryCallback(), rabbitMQMessageConsume.getCancelCallback());
+            channel = rabbitMQMessageConsume.getChannel();
+            consumerTag = channel.basicConsume(rabbitMQMessageConsume.getRabbitMQConfigMessage().getQueueName(), rabbitMQMessageConsume.isAutoAcknowledge(), rabbitMQMessageConsume.getDeliveryCallback(), rabbitMQMessageConsume.getCancelCallback());
         } catch (IOException ex) {
             throw new RabbitMQException(ex);
         }
         return consumerTag;
+    }
+    
+    /**
+     * Acknowledges the given message. 
+     * 
+     * @param consumerTag as long
+     * @throws RabbitMQException 
+     */    
+    public void acknolewdge(long consumerTag) throws RabbitMQException {
+        try {
+            channel.basicAck(consumerTag, false);
+        } catch (IOException ex) {
+            throw new RabbitMQException(ex);
+        }
     }
 }

@@ -19,6 +19,7 @@ import static local.tin.tests.rabbitmq.simple.consumer.Consumer.QUEUE_NAME;
 import local.tin.tests.rabbitmq.simple.consumer.callbacks.SimpleCancelCallback;
 import local.tin.tests.rabbitmq.simple.consumer.callbacks.SimpleDeliverCallback;
 import local.tin.tests.rabbitmq.base.threads.ConsumerThread;
+import local.tin.tests.rabbitmq.simple.consumer.callbacks.AnotherSimpleDeliverCallback;
 import org.apache.log4j.Logger;
 
 /**
@@ -28,7 +29,7 @@ import org.apache.log4j.Logger;
 public class LoopedConsumer {
 
     public static final String HOST = "192.168.56.19";
-    public static final String QUEUE_NAME = "hello";
+    public static final String QUEUE_NAME = "sample_persistent_queue";
     public static final String CHARSET = "UTF-8";
     public static final boolean AUTO_ACKNOWLEDGE = false;
     private static final Logger LOGGER = Logger.getLogger(LoopedConsumer.class);
@@ -45,12 +46,13 @@ public class LoopedConsumer {
         RabbitMQConfigSender rabbitMQConfigMessage = new RabbitMQConfigSender();
         rabbitMQConfigMessage.setConnection(connection);
         rabbitMQConfigMessage.setQueueName(QUEUE_NAME);
+        rabbitMQConfigMessage.setDurable(true);
         Channel channel = ChannelFactory.getInstance().getChannel(rabbitMQConfigMessage);
         RabbitMQMessageConsume rabbitMQMessage = new RabbitMQMessageConsume();
         rabbitMQMessage.setRabbitMQConfigMessage(rabbitMQConfigMessage);
         rabbitMQMessage.setChannel(channel);
         rabbitMQMessage.setCharset(CHARSET);
-        SimpleDeliverCallback simpleDeliverCallback = new SimpleDeliverCallback(CHARSET, channel);
+        AnotherSimpleDeliverCallback simpleDeliverCallback = new AnotherSimpleDeliverCallback(rabbitMQMessage);
         rabbitMQMessage.setDeliveryCallback(simpleDeliverCallback);
         SimpleCancelCallback emptyCancelCallback = new SimpleCancelCallback();
         rabbitMQMessage.setCancelCallback(emptyCancelCallback);
