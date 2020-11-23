@@ -12,8 +12,7 @@ import local.tin.tests.rabbitmq.base.model.RabbitMQMessageConsume;
  */
 public class Consumer {
     
-    private Channel channel;
-    
+
     private Consumer() {
     }
     
@@ -41,8 +40,7 @@ public class Consumer {
             if (rabbitMQMessageConsume.getChannel() == null) {
                 rabbitMQMessageConsume.setChannel(ChannelFactory.getInstance().getChannel(rabbitMQMessageConsume.getRabbitMQConfigMessage()));
             }
-            channel = rabbitMQMessageConsume.getChannel();
-            consumerTag = channel.basicConsume(rabbitMQMessageConsume.getRabbitMQConfigMessage().getQueueName(), rabbitMQMessageConsume.isAutoAcknowledge(), rabbitMQMessageConsume.getDeliveryCallback(), rabbitMQMessageConsume.getCancelCallback());
+            consumerTag = rabbitMQMessageConsume.getChannel().basicConsume(rabbitMQMessageConsume.getRabbitMQConfigMessage().getQueueName(), rabbitMQMessageConsume.isAutoAcknowledge(), rabbitMQMessageConsume.getDeliveryCallback(), rabbitMQMessageConsume.getCancelCallback());
         } catch (IOException ex) {
             throw new RabbitMQException(ex);
         }
@@ -52,12 +50,16 @@ public class Consumer {
     /**
      * Acknowledges the given message. 
      * 
+     * @param rabbitMQMessageConsume as RabbitMQMessageConsume
      * @param consumerTag as long
      * @throws RabbitMQException 
      */    
-    public void acknolewdge(long consumerTag) throws RabbitMQException {
+    public void acknolewdge(RabbitMQMessageConsume rabbitMQMessageConsume, long consumerTag) throws RabbitMQException {
         try {
-            channel.basicAck(consumerTag, false);
+            if (rabbitMQMessageConsume.getChannel() == null) {
+                rabbitMQMessageConsume.setChannel(ChannelFactory.getInstance().getChannel(rabbitMQMessageConsume.getRabbitMQConfigMessage()));
+            }            
+            rabbitMQMessageConsume.getChannel().basicAck(consumerTag, false);
         } catch (IOException ex) {
             throw new RabbitMQException(ex);
         }

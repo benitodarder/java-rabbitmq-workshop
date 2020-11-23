@@ -16,26 +16,26 @@ import org.apache.log4j.Logger;
 public class AnotherSimpleDeliverCallback implements DeliverCallback {
 
     private static final Logger LOGGER = Logger.getLogger(AnotherSimpleDeliverCallback.class);
-    private final String charset;
+    private final RabbitMQMessageConsume rabbitMQMessageConsume;
 
     public AnotherSimpleDeliverCallback(RabbitMQMessageConsume rabbitMQMessageConsume) {
-        this.charset = rabbitMQMessageConsume.getCharset();
+        this.rabbitMQMessageConsume = rabbitMQMessageConsume;
     }
     
 
     
     @Override
     public void handle(String string, Delivery dlvr) throws IOException {
-        LOGGER.info(new String(dlvr.getBody(), charset));
+        LOGGER.info(new String(dlvr.getBody(), rabbitMQMessageConsume.getCharset()));
         try {
-            Consumer.getInstance().acknolewdge(dlvr.getEnvelope().getDeliveryTag());
+            Consumer.getInstance().acknolewdge(rabbitMQMessageConsume, dlvr.getEnvelope().getDeliveryTag());
         } catch (RabbitMQException ex) {
             throw new IIOException("Could not acknowledge.", ex);
         }
     }
 
     public String getCharset() {
-        return charset;
+        return rabbitMQMessageConsume.getCharset();
     }
     
     
