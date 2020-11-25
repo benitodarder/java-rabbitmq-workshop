@@ -8,6 +8,7 @@
     <modules>
         <module>rabbitmq-tutorials</module>
         <module>simple-producer-consumer</module>
+        <module>simple-jms-producer-consumer</module>
     </modules>
     <properties>
         <!-- Project properties -->
@@ -29,8 +30,10 @@
         <sonar.plugin.version>3.6.0.1398</sonar.plugin.version>
         <sonar-jacoco-listeners.version>1.4</sonar-jacoco-listeners.version>      
         <!-- General dependenies -->
+        <javaee.api.version>6.0</javaee.api.version>
         <log4j.version>1.2.17</log4j.version>
         <rabbitmq.version>5.10.0</rabbitmq.version>
+        <rabbitmq.jms.version>2.2.0</rabbitmq.jms.version>
         <slf4j.version>1.7.26</slf4j.version>               
     </properties>
     <dependencyManagement>
@@ -54,7 +57,17 @@
                 <groupId>log4j</groupId>
                 <artifactId>log4j</artifactId>
                 <version>${log4j.version}</version>
-            </dependency>  
+            </dependency> 
+            <dependency>
+                <groupId>com.rabbitmq.jms</groupId>
+                <artifactId>rabbitmq-jms</artifactId>
+                <version>${rabbitmq.jms.version}</version>
+            </dependency> 
+            <dependency>
+                <groupId>javax</groupId>
+                <artifactId>javaee-api</artifactId>
+                <version>${javaee.api.version}</version>
+            </dependency>                      
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
