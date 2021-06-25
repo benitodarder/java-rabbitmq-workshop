@@ -2,6 +2,7 @@ package local.tin.tests.rabbitmq.base.factories;
 
 import com.rabbitmq.client.Channel;
 import java.io.IOException;
+import java.util.concurrent.TimeoutException;
 import local.tin.tests.rabbitmq.base.model.RabbitMQConfigMessage;
 import local.tin.tests.rabbitmq.base.model.RabbitMQConfigReceiver;
 import local.tin.tests.rabbitmq.base.model.RabbitMQConfigSender;
@@ -37,12 +38,11 @@ public class ChannelFactory {
      * @throws RabbitMQException
      */
     public Channel getChannel(RabbitMQConfigMessage rabbitMQConfig) throws RabbitMQException {
-        Channel channel = null;
-        try {
-            if (rabbitMQConfig.getConnection() == null) {
-                rabbitMQConfig.setConnection(ConnectionsFactory.getInstance().getConnection(rabbitMQConfig));
-            }
-            channel = rabbitMQConfig.getConnection().createChannel();
+
+        if (rabbitMQConfig.getConnection() == null) {
+            rabbitMQConfig.setConnection(ConnectionsFactory.getInstance().getConnection(rabbitMQConfig));
+        }
+        try ( Channel channel = rabbitMQConfig.getConnection().createChannel()) {
             if (rabbitMQConfig instanceof RabbitMQConfigSender) {
                 RabbitMQConfigSender rabbitMQConfigSender = (RabbitMQConfigSender) rabbitMQConfig;
                 if (rabbitMQConfig instanceof RabbitMQConfigReceiver) {
@@ -53,9 +53,9 @@ public class ChannelFactory {
             } else {
                 throw new RabbitMQException("Unexpected RabbitMQConfig:" + rabbitMQConfig.getClass().getSimpleName());
             }
-        } catch (IOException ioe) {
-            throw new RabbitMQException(ioe);
+            return channel;
+        } catch (IOException | TimeoutException ex) {
+            throw new RabbitMQException(ex);
         }
-        return channel;
     }
 }

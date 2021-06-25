@@ -1,6 +1,5 @@
 package local.tin.tests.rabbitmq.base.exchanges;
 
-import com.rabbitmq.client.Channel;
 import java.io.IOException;
 import local.tin.tests.rabbitmq.base.factories.ChannelFactory;
 import local.tin.tests.rabbitmq.base.model.RabbitMQException;

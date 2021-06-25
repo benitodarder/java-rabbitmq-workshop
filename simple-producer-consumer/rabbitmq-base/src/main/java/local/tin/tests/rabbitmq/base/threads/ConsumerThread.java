@@ -97,7 +97,7 @@ public class ConsumerThread extends Thread implements IConsumerThread {
     }
     
     @Override
-    public void start() {
+    public synchronized void start() {
         try {
             startChannel();
         } catch (RabbitMQException ex) {
